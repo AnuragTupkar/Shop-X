@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  Favorite, FavoriteBorder } from "@mui/icons-material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 
@@ -9,6 +9,7 @@ const Product = () => {
   const [product, setProduct] = useState({});
   const [error, setError] = useState(null);
   const [isWishlisted, setIsWishlisted] = useState(false);
+
   const increase = () => {
     setCounter((prevCounter) => Number(prevCounter) + 1);
   };
@@ -17,31 +18,83 @@ const Product = () => {
     setCounter((prevCounter) => Math.max(1, prevCounter - 1)); // Prevents negative values
   };
 
+  // Handle Wishlist functionality
   const wishlistFunc = async () => {
     try {
-      await axios.post(`/api/addWishlist`, { productId: product._id });
-      setIsWishlisted((prev) => !prev); // Toggle wishlist state
-      console.log("Wishlist status changed for product ID:", product._id);
+      if (isWishlisted) {
+        const response = await axios.post(
+          '/api/removeWishlist',
+          { productId: product._id },
+          { withCredentials: true }
+        );
+  
+        if (response.status === 200) {
+          setIsWishlisted(false);
+          console.log('Product removed from wishlist:', product._id);
+        }
+      } else {
+        const response = await axios.post(
+          '/api/addWishlist',
+          { productId: product._id },
+          { withCredentials: true }
+        );
+  
+        if (response.status === 200) {
+          setIsWishlisted(true);
+          console.log('Product added to wishlist:', product._id);
+        }
+      }
     } catch (error) {
-      console.error("Error adding to wishlist:", error);
+      console.error('Error updating wishlist:', error.response?.data || error.message);
+      alert('Failed to update wishlist. Please try again.');
     }
   };
 
+  // Handle Add to Cart functionality
+  const addToCart = async () => {
+    try {
+      const response = await axios.post(
+        '/api/addToCart', 
+        { productId: product._id, quantity: counter },
+        { withCredentials: true }
+      );
+  
+      if (response.status === 200) {
+        console.log('Product added to cart:', product._id);
+        alert('Product added to cart');
+      } else {
+        console.error('Failed to add to cart');
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error.response?.data || error.message);
+      alert('Failed to add to cart. Please try again.');
+    }
+  };
+  
+
+  // Fetch product and wishlist data
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProductAndWishlist = async () => {
       try {
-        const response = await axios.get(`/api/getSingleProduct/${id}`);
-        if (response.data.success) {
-          setProduct(response.data.data);
+        const productResponse = await axios.get(`/api/getSingleProduct/${id}`, { withCredentials: true });
+        const wishlistResponse = await axios.get('/api/getWishlist', { withCredentials: true });
+  
+        if (productResponse.data.success && wishlistResponse.status === 200) {
+          setProduct(productResponse.data.data);
+  
+          // Check if the current product is in the wishlist
+          const isInWishlist = wishlistResponse.data.wishlist.some((item) => item._id === productResponse.data.data._id);
+          setIsWishlisted(isInWishlist);
         } else {
-          setError(response.data.message);
+          setError('Failed to fetch data.');
         }
       } catch (error) {
-        console.error("Error fetching product data:", error);
-        setError("Failed to fetch product data. Please try again later.");
+        console.error('Error fetching data:', error);
+        setError('An error occurred while fetching data.');
       }
     };
-    fetchData();
+  
+    fetchProductAndWishlist();
   }, [id]);
 
   return (
@@ -107,6 +160,14 @@ const Product = () => {
               >
                 Buy Now
               </Link>
+
+              <button
+                className="px-6 pt-2 my-2 text-white bg-green-500 rounded-lg"
+                onClick={addToCart}
+              >
+                Add to Cart
+              </button>
+
               <div className="flex items-center justify-center align-middle rounded-lg">
                 <button
                   className="flex items-center justify-center w-10 h-10 p-0 px-4 align-middle border border-black border-1"

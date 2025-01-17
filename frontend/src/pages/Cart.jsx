@@ -1,45 +1,72 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-const Cart = () => {
-  return (
-    <>
-        <div className="mx-26">
-            <div className="flex border gap-[23.3rem] justify-center">
-                <h1 className="">Product</h1>
-                <h1 className="">Price</h1>
-                <h1 className="">Quantity</h1>
-                <h1 className="">Subtotal</h1>
-            </div>
-            <div className="">
-                <div className="flex">
-                    <img src="" alt="" className="" />
-                    <h1 className=""></h1>
-                </div>
-                <h1 className=""></h1>
-                <div className="">
-                    <input type="number" />
-                </div>
-                <div className="h1"></div>
-            </div>
-            <div className="border ">
-                <h1 className="">Cart Total</h1>
-                <div className="flex">
-                    <h1 className="">Subtotal</h1>
-                    <h1 className=""></h1>
-                </div>
-                <div className="flex">
-                    <h1 className="">Shipping</h1>
-                    <h1 className=""></h1>
-                </div>
-                <div className="flex mb-10">
-                    <h1 className="">Total</h1>
-                    <h1 className=""></h1>
-                </div>
-                <Link to="/checkout" className="bg-red-500 text-white p-4 rounded-md">Proceed to checkout</Link>
-            </div>
-        </div>
-    </>
-  )
-}
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-export default Cart
+const CartPage = () => {
+  const [cartItems, setCartItems] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  // Fetch the cart when the component mounts
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  // Fetch the cart data from the backend
+  const fetchCart = async () => {
+    try {
+      const response = await axios.get('/api/getCart');
+      setCartItems(response.data.cart.items); // Assuming the backend returns a 'cart' object with an 'items' array
+      setTotalAmount(response.data.cart.totalAmount); // Assuming the backend also returns the 'totalAmount'
+    } catch (error) {
+      console.error("Failed to fetch cart:", error);
+    }
+  };
+
+  // Add item to cart
+  const addToCart = async (productId, quantity) => {
+    try {
+      const response = await axios.post('/api/addToCart', { productId, quantity });
+      fetchCart(); // Fetch the updated cart
+    } catch (error) {
+      console.error("Failed to add item to cart:", error);
+    }
+  };
+
+  // Remove item from cart
+  const removeFromCart = async (productId) => {
+    try {
+      const response = await axios.post('/api/removeFromCart', { productId });
+      fetchCart(); // Fetch the updated cart
+    } catch (error) {
+      console.error("Failed to remove item from cart:", error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Your Cart</h1>
+      <div>
+        {cartItems.length === 0 ? (
+          <p>Your cart is empty.</p>
+        ) : (
+          <div>
+            {cartItems.map(item => (
+              <div key={item.product._id} className="cart-item">
+                <img src={item.product.image} alt={item.product.title} />
+                <p>{item.product.title}</p>
+                <p>Price: {item.product.price} ₹</p>
+                <p>Quantity: {item.quantity}</p>
+                <button onClick={() => removeFromCart(item.product._id)}>Remove</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <div>
+        <h3>Total: {totalAmount} ₹</h3>
+        <button onClick={() => console.log("Proceed to Checkout")}>Proceed to Checkout</button>
+      </div>
+    </div>
+  );
+};
+
+export default CartPage;

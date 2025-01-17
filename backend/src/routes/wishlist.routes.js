@@ -10,6 +10,6 @@ router.post('/addWishlist', isLoggedin, addToWishlist);
 router.post('/removeWishlist', isLoggedin,removeFromWishlist);
 
 // Get wishlist
-router.get('/', isLoggedin, getWishlist);
+router.get('/getWishList', isLoggedin, getWishlist);
 
 module.exports = router;
