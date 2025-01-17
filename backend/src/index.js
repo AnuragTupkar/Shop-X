@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
 
 
+
 // Database connection
 const connectDB = require("./db/index");
 connectDB();
