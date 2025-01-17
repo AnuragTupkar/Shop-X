@@ -7,8 +7,8 @@ import Carosel3 from "../assets/Carosel4.png";
 import HomeAd from "../assets/HomeAd.png";
 import LeftFeatured from "../assets/leftFeatured.png";
 import RightTopFeatured from "../assets/rightTopFeatured.png";
-import BottomLeftFeatured from "../assets/BottomLeftFeatured.png";
-import BottomRightFeatured from "../assets/BottomRightFeatured.png";
+import BottomLeftFeatured from "../assets/bottomLeftFeatured.png";
+import BottomRightFeatured from "../assets/bottomRightFeatured.png";
 import Features from "../assets/Features.png";
 
 import CatagoryCard from "../components/CatagoryCard";
