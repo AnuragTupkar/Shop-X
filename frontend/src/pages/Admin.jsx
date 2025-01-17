@@ -4,8 +4,13 @@ import axios from "axios";
 const Admin = () => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
+  const [imageOne, setImageOne] = useState("");
+  const [imageTwo, setImageTwo] = useState("");
+  const [imageThree, setImageThree] = useState("");
+  const [imageFour, setImageFour] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [catagory, setCatagory] = useState("")
   const [products, setProducts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editingProductId, setEditingProductId] = useState(null);
@@ -26,12 +31,13 @@ const Admin = () => {
     e.preventDefault();
     try {
       if (isEditing) {
-        const updatedProduct = { title, image, price, description };
-        await axios.post("/api/updateProduct", updatedProduct);
+        const updatedProduct = { title, image, price, description, imageOne, imageTwo, imageThree, imageFour, catagory };
+        await axios.put(`/api/products/${editingProductId}`, updatedProduct); // Update
+
         setIsEditing(false);
         setEditingProductId(null);
       } else {
-        const newProduct = { title, image, price, description };
+        const newProduct = {  title, image, price, description, imageOne, imageTwo, imageThree, imageFour, catagory };
         await axios.post("/api/createProduct", newProduct);
       }
       setTitle("");
@@ -94,13 +100,23 @@ const Admin = () => {
               />
             </label>
             <label className="block">
+              <span className="text-gray-600">Image 1 URL</span>
+              <input
+                className="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300"
+                type="text"
+                placeholder="Enter image link"
+                value={imageOne}
+                onChange={(e) => setImageOne(e.target.value)}
+              />
+            </label>
+            <label className="block">
               <span className="text-gray-600">Image 2 URL</span>
               <input
                 className="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300"
                 type="text"
                 placeholder="Enter image link"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                value={imageTwo}
+                onChange={(e) => setImageTwo(e.target.value)}
               />
             </label>
             <label className="block">
@@ -109,8 +125,8 @@ const Admin = () => {
                 className="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300"
                 type="text"
                 placeholder="Enter image link"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                value={imageThree}
+                onChange={(e) => setImageThree(e.target.value)}
               />
             </label>
             <label className="block">
@@ -119,8 +135,8 @@ const Admin = () => {
                 className="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300"
                 type="text"
                 placeholder="Enter image link"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                value={imageFour}
+                onChange={(e) => setImageFour(e.target.value)}
               />
             </label>
             <label className="block">
@@ -134,13 +150,13 @@ const Admin = () => {
               />
             </label>
             <label className="block">
-              <span className="text-gray-600">Catagories</span>
+              <span className="text-gray-600">Catagory</span>
               <input
                 className="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300"
                 type="text"
                 placeholder="Enter price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={catagory}
+                onChange={(e) => setCatagory(e.target.value)}
               />
             </label>
             <label className="block">

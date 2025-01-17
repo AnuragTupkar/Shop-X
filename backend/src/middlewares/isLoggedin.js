@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const isLoggedIn = (req, res, next) => {
+const isLoggedin = (req, res, next) => {
     try {
         // Check if token exists (from cookies or authorization header)
         const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
@@ -23,4 +23,4 @@ const isLoggedIn = (req, res, next) => {
     }
 };
 
-module.exports = isLoggedIn;
+module.exports = isLoggedin;

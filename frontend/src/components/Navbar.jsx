@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
   FavoriteBorder,
@@ -34,6 +34,7 @@ const Navbar = () => {
 
     fetchUserInfo();
   }, []);
+
   return (
     <>
       <div className="flex py-10 px-10 sm:mx-24 justify-between bg-gray-100">
@@ -44,29 +45,66 @@ const Navbar = () => {
           </NavLink>
         </div>
         <div className="md:flex gap-8 hidden mt-1">
-          <NavLink to="/" className="">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "underline-offset-4  font-bold underline  text-red-500 " : "hover:underline underline-offset-4"
+            }
+          >
             Home
           </NavLink>
-          <NavLink to="/contact" className="">
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              isActive ? "underline-offset-4  font-bold  underline text-red-500" : "hover:underline underline-offset-4"
+            }
+          >
             Contact
           </NavLink>
-          <NavLink to="/about" className="">
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              isActive ? "underline-offset-4  font-bold underline text-red-500" : "hover:underline underline-offset-4"
+            }
+          >
             About
           </NavLink>
-          <NavLink to="products" className="">
+          <NavLink
+            to="products"
+            className={({ isActive }) =>
+              isActive ? "underline-offset-4  font-bold underline text-red-500" : "hover:underline underline-offset-4"
+            }
+          >
             Products
           </NavLink>
         </div>
         <div className="gap-4 md:flex hidden mt-1">
-          <NavLink to="/wishlist">
+          <NavLink
+            to="/wishlist"
+            className={({ isActive }) =>
+              isActive ? "underline text-red-500" : "hover: fill-red-500"
+            }
+          >
             <FavoriteBorder />
           </NavLink>
-          <NavLink to="/cart">
+          <NavLink
+            to="/cart"
+            className={({ isActive }) =>
+              isActive ? "underline text-red-500" : "hover:underline"
+            }
+          >
             <ShoppingCart />
           </NavLink>
-          {isAdmin &&<NavLink to="/admin">
-            <AddCircle />
-          </NavLink>}
+          {isAdmin && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                isActive ? "underline text-red-500" : "hover:underline"
+              }
+            >
+              <AddCircle />
+            </NavLink>
+          )}
           <div className="p-0 mt-[-2px] md:hidden">
             <Menu />
           </div>

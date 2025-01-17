@@ -22,10 +22,10 @@ export default function Contact() {
     setFormStatus('sent')
   }
   return (
-    <main className="flex-grow container ml-24   py-8">
-    <h2 className="text-3xl font-bold mb-6">Contact Us</h2>
+    <main className="container flex-grow py-8 ml-24">
+    <h2 className="mb-6 text-3xl font-bold">Contact Us</h2>
     
-    <div className="grid md:grid-cols-2 gap-8">
+    <div className="grid gap-8 md:grid-cols-2">
       <div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -61,7 +61,7 @@ export default function Contact() {
           <button
             type="submit"
             
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center"
+            className="flex items-center px-4 py-2 text-white transition-colors bg-blue-500 rounded-md hover:bg-blue-600"
           >
             Submit
 
@@ -70,7 +70,7 @@ export default function Contact() {
 
       </div>
       <div className='ml-8'>
-        <h3 className="text-xl font-semibold mb-4 ">Our Information</h3>
+        <h3 className="mb-4 text-xl font-semibold ">Our Information</h3>
         <p className="mb-2"><strong>Address:</strong> 123 E-commerce St, Digital City, 12345</p>
         <p className="mb-2"><strong>Phone:</strong> (123) 456-7890</p>
         <p className="mb-2"><strong>Email:</strong> support@shopx.com</p>

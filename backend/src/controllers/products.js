@@ -4,8 +4,8 @@ const Product = require("../models/product.model");
 exports.createProduct = async (req, res) => {
   
   try {
-    const { title, price, image } = req.body;
-    const response = await Product.create({ title, price, image });
+    const { title, price, image, iamgeOne, imageTwo, imageThree, imageFour, catagory, description } = req.body;
+    const response = await Product.create({ title, price, image, iamgeOne, imageTwo, imageThree, imageFour, catagory, description  });
     res.status(200).json({
       success: true,
       data: response,

@@ -13,6 +13,22 @@ const productSchema = new mongoose.Schema({
         type:String,
         require:true
     },
+    imageOne:{
+        type:String,
+    },
+    imageTwo:{
+        type:String,
+    },
+    imageThree:{
+        type:String,
+    },
+    imageFour:{
+        type:String,
+    },
+    catagory:{
+        type:String,
+        requrie: true,
+    },
     description:{
         type:String,
         require:true

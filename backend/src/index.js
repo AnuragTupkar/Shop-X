@@ -20,10 +20,12 @@ const productRoutes = require('./routes/products.routes');
 const userRoutes = require('./routes/users.routes');
 const orderRoutes = require('./routes/orders.routes')
 const verifyRoutes = require('./routes/verify.routes')
+const wishlistRoutes = require('./routes/wishlist.routes')
+app.use('/api', wishlistRoutes);
 app.use('/api', productRoutes); // Adjusted the path for specificity
-app.use('/api', userRoutes); 
-app.use('/api', orderRoutes); 
-app.use('/api', verifyRoutes); 
+app.use('/api', userRoutes);
+app.use('/api', orderRoutes);
+app.use('/api', verifyRoutes);
 // Test route
 app.get('/', (req, res) => {
     res.send('Server is ready');
