@@ -2,14 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://your-backend-domain.com/api/:path*"
-    }
-  ],
-  "redirects": [
+      "destination": "http://ahttps://shop-x-five.vercel.app/:path*"
+    },
     {
-      "source": "/products",
-      "destination": "/",
-      "statusCode": 200
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
