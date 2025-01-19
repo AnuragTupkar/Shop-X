@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://ahttps://shop-x-five.vercel.app/:path*"
+      "destination": "https://shop-x-five.vercel.app/:path*"
     },
     {
       "source": "/(.*)",
