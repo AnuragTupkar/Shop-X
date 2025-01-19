@@ -9,7 +9,7 @@ import LeftFeatured from "../assets/leftFeatured.png";
 import RightTopFeatured from "../assets/rightTopFeatured.png";
 import BottomLeftFeatured from "../assets/bottomLeftFeatured.png";
 import BottomRightFeatured from "../assets/bottomRightFeatured.png";
-import Features from "../assets/Features.png";
+import Features from "../assets/features.png";
 
 import CatagoryCard from "../components/CatagoryCard";
 import {  Games, Headphones, LaptopWindows, PhoneAndroid, Tv, Watch } from "@mui/icons-material";
